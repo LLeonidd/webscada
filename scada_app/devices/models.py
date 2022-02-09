@@ -59,7 +59,7 @@ class ValueStyle(models.Model):
         verbose_name_plural = 'Единицы измерения'
 
     def __str__(self):
-        return f'{self.name}. {self.description}'
+        return f'{self.description}'
 
 
 class Plc(models.Model):
@@ -158,7 +158,7 @@ class LineType(models.Model):
         verbose_name_plural = 'Типы линий'
 
     def __str__(self):
-        return f'{self.name}. {self.description}'
+        return f'{self.description}'
 
 
 class Tag(models.Model):
@@ -175,12 +175,12 @@ class Tag(models.Model):
         verbose_name='Приоритет в боксе',
         help_text='Чем меньше значение, тем выше тег расположен в боксе'
     )
-    icon = models.CharField(max_length=228, verbose_name='Значок тега на форме', help_text='CSS class')
-    valueStyle = models.ForeignKey(ValueStyle, on_delete=models.CASCADE, verbose_name='Единица измерения')
-    decimal = models.CharField(max_length=228, verbose_name='Количество знаков после запятой')
+    valueStyle = models.ForeignKey(ValueStyle, blank=True, null=True, on_delete=models.CASCADE, verbose_name='Единица измерения')
+    decimal = models.PositiveSmallIntegerField(blank=True, verbose_name='Количество знаков после запятой')
     plc = models.ForeignKey(Plc, on_delete=models.CASCADE, verbose_name='Контроллер')
     modes = models.ForeignKey(ModesGroup, on_delete=models.CASCADE, verbose_name='Отображать как')
     info_page = models.BooleanField(default=False, verbose_name='Выводить на сводной странице объкта')
+    icon = models.CharField(max_length=228, blank=True, verbose_name='Значок тега на форме', help_text='CSS class')
     chart = models.BooleanField(default=False, verbose_name='Выводить в графиках')
     line = models.ForeignKey(LineType, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Тип линии графиков')
     alarm = models.BooleanField(default=False, db_index=True, verbose_name='Аварийный тег')

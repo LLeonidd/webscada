@@ -54,7 +54,7 @@ class ObjectPoint(models.Model):
     code = models.CharField(max_length=10, verbose_name='Код объекта', blank=True)
     guid = models.CharField(max_length=300, null=True, blank=True, verbose_name='GUID объекта')
     service = models.ForeignKey(ServiceCompany, on_delete=models.CASCADE, blank=True, verbose_name='Сервисная компания')
-    district = models.ForeignKey(District, on_delete=models.CASCADE, verbose_name='Округ')
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Округ')
     devices = models.ManyToManyField(DeviceGroup, blank=True, verbose_name='Группы устройств объекта',)
     widgets = models.ManyToManyField(WidgetType, blank=True, verbose_name='Виджеты',)
 
